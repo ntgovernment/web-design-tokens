@@ -2,10 +2,20 @@
 
 /**
  * Validate Design Tokens
- * 
- * This script validates the structure and content of design tokens
- * to ensure they meet the required format and have no issues.
- * 
+ *
+ * Validates the structure and content of tokens.json to ensure it is ready
+ * for use by build-tokens.js and generate-js-tokens.js.
+ *
+ * Checks performed:
+ *   - File exists at tokens.json (package root)
+ *   - Valid JSON syntax
+ *   - Required top-level keys: primitives, themes
+ *   - Optional top-level keys reported: grid, font, effect, typography
+ *   - Theme structure: ntg and central with clr, type, radii, sp, border-width
+ *   - Primitive structure: ntg (13 colour groups) and central (8 colour groups)
+ *   - Circular/unresolvable token references
+ *   - Token count and file statistics
+ *
  * Usage:
  *   node scripts/validate-tokens.js
  *   npm run tokens:validate

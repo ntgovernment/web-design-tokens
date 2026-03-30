@@ -1,6 +1,6 @@
 {
   "name": "@ntgovernment/web-design-tokens",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Design tokens for the NT Government web design system — CSS custom properties and JS/TS token objects.",
   "license": "MIT",
   "type": "module",
@@ -13,20 +13,19 @@
       "require": "./dist/index.cjs",
       "types": "./dist/index.d.ts"
     },
-    "./css": "./css/index.css",
-    "./css/common": "./css/common.css",
-    "./css/grid": "./css/grid.css",
-    "./css/typography": "./css/typography.css",
-    "./css/typography-literals": "./css/typography-literals.css",
-    "./css/base-variables": "./css/base-variables.css",
-    "./css/theme-ntg": "./css/theme-ntg.css",
-    "./css/theme-central": "./css/theme-central.css",
-    "./css/typography-ntg": "./css/typography-ntg.css",
-    "./css/typography-central": "./css/typography-central.css",
+    "./css": "./dist/css/index.css",
+    "./css/common": "./dist/css/common.css",
+    "./css/grid": "./dist/css/grid.css",
+    "./css/typography": "./dist/css/typography.css",
+    "./css/typography-literals": "./dist/css/typography-literals.css",
+    "./css/base-variables": "./dist/css/base-variables.css",
+    "./css/theme-ntg": "./dist/css/themes/theme-ntg.css",
+    "./css/theme-central": "./dist/css/themes/theme-central.css",
+    "./css/typography-ntg": "./dist/css/themes/typography-ntg.css",
+    "./css/typography-central": "./dist/css/themes/typography-central.css",
     "./tokens.json": "./tokens.json"
   },
   "files": [
-    "css/",
     "dist/",
     "tokens.json",
     "README.md"
@@ -49,7 +48,12 @@
   "keywords": [
     "design-tokens",
     "css-variables",
+    "css-custom-properties",
     "nt-government",
-    "design-system"
+    "northern-territory",
+    "design-system",
+    "theme",
+    "figma",
+    "typescript"
   ]
 }

@@ -8,6 +8,18 @@
  *   dist/index.mjs   — ES module
  *   dist/index.cjs   — CommonJS module
  *   dist/index.d.ts  — TypeScript declarations
+ *
+ * Exported names and shapes:
+ *   colors     — { ntg, central, status } — primitive palette + status colours
+ *   spacing    — { xxs, xs, sm, md, lg, xl, xxl, xxxl } — values in px
+ *   typography — keyed by category → variant → property (size, weight, lineHeight, …)
+ *   shadows    — { sm, sm-top, md, md-top, lg, lg-top, lg-right, focus-ntg, focus-central }
+ *   borders    — { widths: { sm–xxl }, radii: { none, button, sm, md, lg } }
+ *   grid       — { xs-575, sm-767, md-991, lg-1199, xl-1200 } — breakpoint configs
+ *
+ * Usage:
+ *   node scripts/generate-js-tokens.js
+ *   npm run build:js
  */
 
 import { readFileSync, writeFileSync, mkdirSync } from "fs";

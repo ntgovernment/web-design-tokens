@@ -9,15 +9,16 @@
  * 2. Run: npm run tokens:build
  * 
  * Import order: common.css → grid.css → typography.css → typography-literals.css → theme
+ * Location: dist/css/themes/
  * 
- * Generated: 2026-03-30T11:17:17.192Z
+ * Generated: 2026-03-30T11:48:53.392Z
  * Source: Figma Design Tokens
  */
 
-@import './common.css';
-@import './grid.css';
-@import './typography.css';
-@import './typography-literals.css';
+@import '../common.css';
+@import '../grid.css';
+@import '../typography.css';
+@import '../typography-literals.css';
 
 :root {
   --central-blue-02: #606a80;

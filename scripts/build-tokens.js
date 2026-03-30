@@ -5,12 +5,21 @@
  *
  * Transforms design tokens from Figma (JSON format) into a layered CSS custom property architecture.
  *
- * LAYERED ARCHITECTURE:
- *   1. common.css - Shared tokens (shadows, spacing, borders, radii)
- *   2. grid.css - Bootstrap-compatible grid configuration
- *   3. typography.css - Theme-agnostic typography (excludes fontFamily)
- *   4. theme-ntg.css - NT.GOV.AU theme (Lato font, ochre accent)
- *   5. theme-central.css - NTG Central theme (Roboto font, green accent)
+ * LAYERED ARCHITECTURE (output files in dist/css/ and dist/css/themes/):
+ *   1. common.css             - Shared tokens (shadows, spacing, borders, radii)
+ *   2. grid.css               - Bootstrap-compatible grid configuration
+ *   3. typography.css         - Theme-agnostic typography (excludes fontFamily)
+ *   4. typography-literals.css - Literal text-transform values
+ *   5. base-variables.css     - Unprefixed semantic defaults (NTG theme)
+ *   6. theme-ntg.css          - NT.GOV.AU theme (Lato font, ochre accent)
+ *   7. theme-central.css      - NTG Central theme (Roboto font, green accent)
+ *   8. typography-ntg.css     - Bootstrap --bs-* overrides (NTG)
+ *   9. typography-central.css - Bootstrap --bs-* overrides (Central)
+ *
+ * Cascade rule: theme-ntg.css and theme-central.css @import layers 1–4 using
+ * relative paths (../common.css etc.) since they live in dist/css/themes/.
+ * The dist/css/index.css barrel imports all layers explicitly (with base-variables
+ * between the shared layers and the NTG theme).
  *
  * PROPERTY MAPPINGS (tokens.json → CSS variables):
  *   fontSize → -size
@@ -46,7 +55,10 @@ import { dirname, join } from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const rootDir = join(__dirname, "..");
-mkdirSync(join(rootDir, "css"), { recursive: true });
+const cssDir = join(rootDir, "dist/css");
+const themesDir = join(rootDir, "dist/css/themes");
+mkdirSync(cssDir, { recursive: true });
+mkdirSync(themesDir, { recursive: true });
 
 console.log("🎨 Building Design Tokens...\n");
 
@@ -907,15 +919,16 @@ function generateCSS(themeName, themeData, prefix, useCommonVars = false) {
  * 2. Run: npm run tokens:build
  * 
  * Import order: common.css → grid.css → typography.css → typography-literals.css → theme
+ * Location: dist/css/themes/
  * 
  * Generated: ${new Date().toISOString()}
  * Source: Figma Design Tokens
  */
 
-@import './common.css';
-@import './grid.css';
-@import './typography.css';
-@import './typography-literals.css';
+@import '../common.css';
+@import '../grid.css';
+@import '../typography.css';
+@import '../typography-literals.css';
 
 :root {`;
 
@@ -1262,7 +1275,7 @@ function generateBootstrapCSS(themeName, themeData, prefix) {
  * ⚠️ AUTO-GENERATED FILE - DO NOT EDIT MANUALLY ⚠️
  * 
  * This file maps Bootstrap CSS variables to ${themeName} theme design tokens.
- * Load order: Bootstrap CDN → this file → ${prefix}-theme.css
+ * Load order: Bootstrap CDN → this file → themes/${prefix}-theme.css
  * 
  * Purpose: Connect Bootstrap's typography system to theme-specific values
  * for seamless theme switching.
@@ -1403,7 +1416,7 @@ try {
 
   const commonTokens = extractCommonTokens();
   const commonCSS = generateCommonCSS(commonTokens);
-  const commonPath = join(rootDir, "css/common.css");
+  const commonPath = join(cssDir, "common.css");
   writeFileSync(commonPath, commonCSS, "utf-8");
 
   const totalCommon =
@@ -1412,7 +1425,7 @@ try {
     commonTokens.borderWidths.length +
     commonTokens.radii.length;
   console.log(
-    `  ✓ Generated css/common.css (${totalCommon} shared variables)`,
+    `  ✓ Generated dist/css/common.css (${totalCommon} shared variables)`,
   );
 } catch (error) {
   console.error("  ❌ Failed to generate common tokens:", error.message);
@@ -1426,11 +1439,11 @@ try {
   const gridTokens = extractGridTokens();
   if (gridTokens.length > 0) {
     const gridCSS = generateGridCSS(gridTokens);
-    const gridPath = join(rootDir, "css/grid.css");
+    const gridPath = join(cssDir, "grid.css");
     writeFileSync(gridPath, gridCSS, "utf-8");
 
     console.log(
-      `  ✓ Generated css/grid.css (${gridTokens.length} variables)`,
+      `  ✓ Generated dist/css/grid.css (${gridTokens.length} variables)`,
     );
   } else {
     console.log("  ⚠ No grid tokens found");
@@ -1447,11 +1460,11 @@ try {
   const typographyTokens = extractTypographyTokens();
   if (typographyTokens.length > 0) {
     const typographyCSS = generateTypographyCSS(typographyTokens);
-    const typographyPath = join(rootDir, "css/typography.css");
+    const typographyPath = join(cssDir, "typography.css");
     writeFileSync(typographyPath, typographyCSS, "utf-8");
 
     console.log(
-      `  ✓ Generated css/typography.css (${typographyTokens.length} variables)`,
+      `  ✓ Generated dist/css/typography.css (${typographyTokens.length} variables)`,
     );
   } else {
     console.log("  ⚠ No typography tokens found");
@@ -1468,13 +1481,13 @@ try {
   const typographyTokens = extractTypographyTokens();
   if (typographyTokens.length > 0) {
     const literalsCSS = generateTypographyLiterals(typographyTokens);
-    const literalsPath = join(rootDir, "css/typography-literals.css");
+    const literalsPath = join(cssDir, "typography-literals.css");
     writeFileSync(literalsPath, literalsCSS, "utf-8");
 
     const literalCount = (literalsCSS.match(/--literal-text-transform-/g) || [])
       .length;
     console.log(
-      `  ✓ Generated css/typography-literals.css (${literalCount} literal values)`,
+      `  ✓ Generated dist/css/typography-literals.css (${literalCount} literal values)`,
     );
   } else {
     console.log("  ⚠ No typography tokens found for literals");
@@ -1494,19 +1507,19 @@ try {
   };
 
   const ntgResult = generateCSS("NT.GOV.AU", ntgData, "ntg-", true);
-  const ntgPath = join(rootDir, "css/theme-ntg.css");
+  const ntgPath = join(themesDir, "theme-ntg.css");
   writeFileSync(ntgPath, ntgResult.css, "utf-8");
 
-  console.log("  ✓ Generated css/theme-ntg.css");
+  console.log("  ✓ Generated dist/css/themes/theme-ntg.css");
 
   // Generate base-variables.css using NTG as defaults
   const semanticVars = extractSemanticVariables(ntgResult.variables, "ntg-");
   const baseVarsCSS = generateBaseVariablesCSS(semanticVars, "NT.GOV.AU");
-  const baseVarsPath = join(rootDir, "css/base-variables.css");
+  const baseVarsPath = join(cssDir, "base-variables.css");
   writeFileSync(baseVarsPath, baseVarsCSS, "utf-8");
 
   console.log(
-    `  ✓ Generated css/base-variables.css (${semanticVars.length} semantic variables)`,
+    `  ✓ Generated dist/css/base-variables.css (${semanticVars.length} semantic variables)`,
   );
 } catch (error) {
   console.error("  ❌ Failed to generate NT.GOV.AU theme:", error.message);
@@ -1528,10 +1541,10 @@ try {
     "central-",
     true,
   );
-  const centralPath = join(rootDir, "css/theme-central.css");
+  const centralPath = join(themesDir, "theme-central.css");
   writeFileSync(centralPath, centralResult.css, "utf-8");
 
-  console.log("  ✓ Generated css/theme-central.css");
+  console.log("  ✓ Generated dist/css/themes/theme-central.css");
 } catch (error) {
   console.error("  ❌ Failed to generate NTG Central theme:", error.message);
   process.exit(1);
@@ -1551,9 +1564,9 @@ try {
     ntgBootstrapData,
     "ntg",
   );
-  const ntgBootstrapPath = join(rootDir, "css/typography-ntg.css");
+  const ntgBootstrapPath = join(themesDir, "typography-ntg.css");
   writeFileSync(ntgBootstrapPath, ntgBootstrapCSS, "utf-8");
-  console.log("  ✓ Generated css/typography-ntg.css");
+  console.log("  ✓ Generated dist/css/themes/typography-ntg.css");
 
   // Central Bootstrap overrides
   const centralBootstrapData = {
@@ -1565,12 +1578,9 @@ try {
     centralBootstrapData,
     "central",
   );
-  const centralBootstrapPath = join(
-    rootDir,
-    "css/typography-central.css",
-  );
+  const centralBootstrapPath = join(themesDir, "typography-central.css");
   writeFileSync(centralBootstrapPath, centralBootstrapCSS, "utf-8");
-  console.log("  ✓ Generated css/typography-central.css");
+  console.log("  ✓ Generated dist/css/themes/typography-central.css");
 } catch (error) {
   console.error(
     "  ❌ Failed to generate Bootstrap typography overrides:",
@@ -1579,22 +1589,68 @@ try {
   process.exit(1);
 }
 
+// Write barrel index.css
+try {
+  const indexCSS = `/**
+ * @ntgovernment/web-design-tokens — CSS Barrel
+ *
+ * ⚠️ AUTO-GENERATED FILE - DO NOT EDIT MANUALLY ⚠️
+ *
+ * Imports all token layers in cascade order, giving you the full NT.GOV.AU
+ * theme with all semantic defaults:
+ *
+ *   common.css             — shadows, spacing, border widths, radii (25 vars)
+ *   grid.css               — Bootstrap-compatible grid breakpoints (15 vars)
+ *   typography.css         — theme-agnostic typography scale (144 vars)
+ *   typography-literals.css — literal text-transform values (3 vars)
+ *   base-variables.css     — unprefixed semantic defaults, NTG (82 vars)
+ *   themes/theme-ntg.css   — NT.GOV.AU colour/type theme (796 vars)
+ *
+ * Note: themes/theme-ntg.css re-imports the first four layers internally via
+ * relative ../ paths. The explicit imports here ensure base-variables.css sits
+ * before the theme in the cascade when bundlers flatten @import chains.
+ *
+ * To use the Central theme instead, import css/theme-central individually
+ * (it does not include base-variables.css or this barrel).
+ *
+ * Usage:
+ *   @import '@ntgovernment/web-design-tokens/css';
+ *
+ * Generated: ${new Date().toISOString()}
+ * Source: Figma Design Tokens
+ */
+
+@import './common.css';
+@import './grid.css';
+@import './typography.css';
+@import './typography-literals.css';
+@import './base-variables.css';
+@import './themes/theme-ntg.css';
+`;
+  writeFileSync(join(cssDir, "index.css"), indexCSS, "utf-8");
+  console.log("\n📋 Generated dist/css/index.css (barrel)");
+} catch (error) {
+  console.error("  ❌ Failed to generate index.css:", error.message);
+  process.exit(1);
+}
+
 console.log("\n✅ Design tokens successfully built!");
 console.log("\nGenerated files:");
-console.log("  - css/common.css (shared tokens)");
-console.log("  - css/grid.css (Bootstrap grid)");
-console.log("  - css/typography.css (theme-agnostic fonts)");
+console.log("  - dist/css/common.css (shared tokens)");
+console.log("  - dist/css/grid.css (Bootstrap grid)");
+console.log("  - dist/css/typography.css (theme-agnostic fonts)");
 console.log(
-  "  - css/typography-literals.css (literal values for text-transform)",
+  "  - dist/css/typography-literals.css (literal values for text-transform)",
 );
 console.log(
-  "  - css/base-variables.css (unprefixed semantic variables)",
+  "  - dist/css/base-variables.css (unprefixed semantic variables)",
 );
-console.log("  - css/theme-ntg.css (NT.GOV.AU theme)");
-console.log("  - css/theme-central.css (NTG Central theme)");
-console.log("  - css/typography-ntg.css (Bootstrap overrides for NTG)");
+console.log("  - dist/css/index.css (barrel — all layers with NTG defaults)");
+console.log("  - dist/css/themes/theme-ntg.css (NT.GOV.AU theme)");
+console.log("  - dist/css/themes/theme-central.css (NTG Central theme)");
+console.log("  - dist/css/themes/typography-ntg.css (Bootstrap overrides for NTG)");
 console.log(
-  "  - css/typography-central.css (Bootstrap overrides for Central)",
+  "  - dist/css/themes/typography-central.css (Bootstrap overrides for Central)",
 );
 console.log(
   "\n💡 Remember to commit the generated CSS files to version control.\n",
