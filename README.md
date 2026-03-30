@@ -71,7 +71,7 @@ console.log(borders.radii.md); // '20px'
 ### Raw tokens
 
 ```js
-import tokens from '@ntgovernment/web-design-tokens/tokens.json' assert { type: 'json' };
+import tokens from '@ntgovernment/web-design-tokens/tokens.json' with { type: 'json' };
 ```
 
 ## Token layers
@@ -141,6 +141,37 @@ npm run build:js         # Generate JS/TS files into dist/
 
 This package is published to GitHub Packages under the `@ntgovernment` scope.
 
-```bash
-npm publish
+**Prerequisites:**
+- A GitHub Personal Access Token (classic) with `write:packages` scope
+- Token stored in your global `~/.npmrc`:
+  ```
+  //npm.pkg.github.com/:_authToken=YOUR_GITHUB_PAT
+  ```
+
+**Steps:**
+
+1. Bump the version in `package.json` (see [Semantic Versioning](https://semver.org/)):
+   ```bash
+   npm version patch   # bug fixes, regenerated output
+   npm version minor   # new exports, new token categories
+   npm version major   # breaking changes to exports or file structure
+   ```
+
+2. Publish (the `prepublishOnly` script runs `npm run build` automatically):
+   ```bash
+   npm publish
+   ```
+
+3. Commit and tag:
+   ```bash
+   git add package.json
+   git commit -m "chore(release): v<version>"
+   git tag v<version>
+   git push origin <branch> --tags
+   ```
+
+**Consumer setup:** Any project installing this package needs the following in their `.npmrc`:
+```
+@ntgovernment:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=YOUR_GITHUB_PAT
 ```

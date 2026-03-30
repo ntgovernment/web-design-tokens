@@ -81,6 +81,6 @@ Two slash-command prompts are available in `.github/prompts/`:
 
 | Script | Purpose |
 |--------|---------|
-| `scripts/build-tokens.js` | ~1600 lines; reads `tokens.json`, writes 9 CSS files to `css/` |
+| `scripts/build-tokens.js` | ~1600 lines; reads `tokens.json`, writes 9 CSS files to `dist/css/` |
 | `scripts/validate-tokens.js` | Validates `tokens.json` structure and reports statistics |
 | `scripts/generate-js-tokens.js` | Reads `tokens.json`, writes `dist/index.{mjs,cjs,d.ts}` |
