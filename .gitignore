@@ -1,0 +1,5 @@
+node_modules/
+
+# Keep generated output — consumers installing from GitHub Packages
+# don't need to run a build step.
+# css/ and dist/ are intentionally committed.

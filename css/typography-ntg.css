@@ -1,0 +1,132 @@
+/**
+ * Bootstrap Typography Overrides - NT.GOV.AU Theme
+ * 
+ * ⚠️ AUTO-GENERATED FILE - DO NOT EDIT MANUALLY ⚠️
+ * 
+ * This file maps Bootstrap CSS variables to NT.GOV.AU theme design tokens.
+ * Load order: Bootstrap CDN → this file → ntg-theme.css
+ * 
+ * Purpose: Connect Bootstrap's typography system to theme-specific values
+ * for seamless theme switching.
+ * 
+ * To regenerate:
+ * 1. Update tokens.json
+ * 2. Run: npm run tokens:build
+ * 
+ * Generated: 2026-03-30T11:17:17.197Z
+ * Source: Figma Design Tokens
+ */
+
+:root {
+  /* ===== TYPOGRAPHY ===== */
+  
+  /* Font Families */
+  --bs-font-sans-serif: var(--ntg-type-font-default), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --bs-body-font-family: var(--ntg-type-font-default), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  
+  /* Body Typography */
+  --bs-body-font-size: var(--ntg-type-desktop-body-default-size);
+  --bs-body-font-weight: var(--type-body-default-weight);
+  --bs-body-line-height: var(--type-body-default-lh);
+  --bs-body-color: var(--ntg-clr-text-default);
+  --bs-body-bg: var(--ntg-clr-bg-default);
+  
+  /* Headings */
+  --bs-heading-color: var(--ntg-clr-text-default);
+  --bs-headings-font-weight: var(--type-heading-h2-weight);
+  
+  /* Links */
+  --bs-link-color: var(--ntg-clr-link-default);
+  --bs-link-hover-color: var(--ntg-clr-link-hover);
+  --bs-link-decoration: var(--ntg-type-link-default-decoration);
+  
+  /* Bootstrap Reboot uses RGB variants - Override Strategy Layer 1 */
+  --bs-link-color-rgb: var(--ntg-clr-link-default-rgb);
+  --bs-link-hover-color-rgb: var(--ntg-clr-link-hover-rgb);
+  
+  /* ===== COLORS ===== */
+  
+  /* Primary Brand Colors mapped to NT.GOV.AU palette */
+  --bs-primary: var(--ntg-clr-action-pirmary);
+  --bs-secondary: var(--ntg-neutral-06);
+  --bs-success: var(--ntg-success-03-d);
+  --bs-info: var(--ntg-info-03-d);
+  --bs-warning: var(--ntg-warning-03-d);
+  --bs-danger: var(--ntg-danger-03-d);
+  --bs-light: var(--ntg-neutral-01);
+  --bs-dark: var(--ntg-blue-03-d);
+  
+  /* Emphasis Colors */
+  --bs-emphasis-color: var(--ntg-clr-text-emphasis);
+  --bs-secondary-color: var(--ntg-clr-text-muted);
+  
+  /* Background Colors */
+  --bs-secondary-bg: var(--ntg-clr-bg-shade-alt);
+  --bs-tertiary-bg: var(--ntg-clr-bg-shade);
+  
+  /* Border Colors */
+  --bs-border-color: var(--ntg-clr-border-subtle);
+  
+  /* Focus Ring */
+  --bs-focus-ring-color: rgba(236, 140, 88, 0.25); /* ntg-orange-02 with opacity */
+  
+  /* ===== COMPONENT-SPECIFIC ===== */
+  
+  /* Code */
+  --bs-code-color: var(--ntg-coral-03-d);
+  
+  /* Highlight/Mark */
+  --bs-highlight-color: var(--ntg-clr-text-default);
+  --bs-highlight-bg: var(--ntg-warning-01);
+  
+  /* Status/Alert Backgrounds */
+  --bs-info-bg-subtle: var(--ntg-info-01);
+  --bs-success-bg-subtle: var(--ntg-success-01);
+  --bs-warning-bg-subtle: var(--ntg-warning-01);
+  --bs-danger-bg-subtle: var(--ntg-danger-01);
+  
+  /* Border Radius - NT.GOV.AU uses sharp corners for buttons */
+  --bs-border-radius: var(--ntg-radii-sm);
+  --bs-border-radius-sm: var(--ntg-radii-none);
+  --bs-border-radius-lg: var(--ntg-radii-md);
+}
+
+/* Inline Link Typography - Figma Spec Compliance */
+/* Override Strategy Layer 3: Direct element override for maximum specificity */
+a {
+  color: var(--ntg-clr-link-default);
+  font-size: var(--type-link-default-size);
+  font-weight: var(--type-link-default-weight);
+  line-height: var(--type-link-default-lh);
+  letter-spacing: var(--type-link-default-ls);
+}
+
+a:hover {
+  color: var(--ntg-clr-link-hover);
+  text-decoration: none;
+}
+
+a:focus,
+a:focus-visible {
+  background: var(--ntg-clr-focus-focus);
+  border-bottom: 4px solid var(--ntg-clr-border-strong-01);
+  text-decoration: none;
+  outline: none;
+}
+
+a:visited {
+  color: var(--ntg-clr-link-visited);
+}
+
+/* Mobile Typography Adjustments */
+@media (max-width: 768px) {
+  :root {
+    --bs-body-font-size: var(--ntg-type-mobile-body-default-size);
+    --bs-body-line-height: var(--type-mobile-body-default-lh);
+  }
+  
+  a {
+    font-size: var(--type-mobile-link-default-size);
+    line-height: var(--type-mobile-link-default-lh);
+  }
+}
