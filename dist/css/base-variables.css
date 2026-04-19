@@ -16,7 +16,7 @@
  *   3. JavaScript: document.body.dataset.theme = 'central';
  * 
  * Default values from: NT.GOV.AU Theme
- * Generated: 2026-04-19T02:13:04.984Z
+ * Generated: 2026-04-19T07:46:10.185Z
  */
 
 :root {
@@ -77,34 +77,8 @@
   --type-desktop-body-default-bold-size: var(--type-body-default-bold-size);
   --type-desktop-body-sm-size: var(--type-body-sm-size);
   --type-desktop-body-sm-bold-size: var(--type-body-sm-bold-size);
-  --type-desktop-button-default-size: var(--type-button-default-size);
-  --type-desktop-button-sm-size: var(--type-button-sm-size);
+  --type-desktop-button-default-size: var(--type-button-label-default-size);
+  --type-desktop-button-sm-size: var(--type-button-label-sm-size);
   --type-desktop-uppercase-sm-size: var(--type-uppercase-sm-size);
   --type-desktop-uppercase-default-size: var(--type-uppercase-default-size);
-  --type-mobile-h1-size: var(--type-mobile-heading-h1-size);
-  --type-mobile-h2-size: var(--type-mobile-heading-h2-size);
-  --type-mobile-h3-size: var(--type-mobile-heading-h3-size);
-  --type-mobile-h4-size: var(--type-mobile-heading-h4-size);
-  --type-mobile-h5-size: var(--type-mobile-heading-h5-size);
-  --type-mobile-h6-size: var(--type-mobile-heading-h6-size);
-  --type-mobile-body-default-size: var(--type-mobile-body-default-size);
-  --type-mobile-body-default-bold-size: var(--type-mobile-body-default-bold-size);
-  --type-mobile-body-sm-size: var(--type-mobile-body-sm-size);
-  --type-mobile-body-sm-bold-size: var(--type-mobile-body-sm-bold-size);
-  --type-mobile-button-default-size: var(--type-mobile-button-default-size);
-  --type-mobile-button-default-sm-size: var(--type-mobile-button-default-sm-size);
-  --type-mobile-tag-size: var(--type-mobile-tag-size);
-  --type-link-default-decoration: var(--type-link-default-decoration);
-  --type-link-default-paragraph-spacing: var(--type-link-default-paragraph-spacing);
-  --type-link-default-bold-decoration: var(--type-link-default-bold-decoration);
-  --type-link-default-bold-paragraph-spacing: var(--type-link-default-bold-paragraph-spacing);
-  --type-link-sm-decoration: var(--type-link-sm-decoration);
-  --type-caption-default-paragraph-spacing: var(--type-caption-default-paragraph-spacing);
-  --type-uppercase-sm-text-transform: var(--type-uppercase-sm-text-transform);
-  --type-uppercase-md-text-transform: var(--type-uppercase-md-text-transform);
-  --type-uppercase-default-text-transform: var(--type-uppercase-default-text-transform);
-  --type-mobile-link-default-decoration: var(--type-mobile-link-default-decoration);
-  --type-mobile-link-default-paragraph-spacing: var(--type-mobile-link-default-paragraph-spacing);
-  --type-mobile-link-sm-decoration: var(--type-mobile-link-sm-decoration);
-  --type-mobile-tag-text-transform: var(--type-mobile-tag-text-transform);
 }

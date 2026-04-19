@@ -14,14 +14,20 @@ npm install @ntgovernment/web-design-tokens
 
 ### CSS Custom Properties
 
-Import a complete theme (recommended — pulls in all token layers automatically):
+#### Import a complete theme (recommended)
+
+Pulls in all token layers automatically (common, grid, typography, theme):
 
 ```css
-/* NT.GOV.AU theme */
+/* NT.GOV.AU theme with @import dependencies */
 @import "@ntgovernment/web-design-tokens/css/theme-ntg";
 
-/* OR: NTG Central theme */
+/* OR: NTG Central theme with @import dependencies */
 @import "@ntgovernment/web-design-tokens/css/theme-central";
+
+/* OR: Bundled (standalone) — all layers inlined, no @import, bundler-safe */
+@import "@ntgovernment/web-design-tokens/css/theme-ntg-bundled";
+@import "@ntgovernment/web-design-tokens/css/theme-central-bundled";
 ```
 
 Import individual token layers:
@@ -94,10 +100,12 @@ import tokens from "@ntgovernment/web-design-tokens/tokens.json" with { type: "j
 | `dist/css/typography.css`                | 149       | Theme-agnostic typography scale          |
 | `dist/css/typography-literals.css`       | 4         | Literal `text-transform` values          |
 | `dist/css/base-variables.css`            | 84        | Unprefixed semantic defaults (NTG)       |
-| `dist/css/themes/theme-ntg.css`          | 810       | NT.GOV.AU theme — Lato, ochre accent     |
-| `dist/css/themes/theme-central.css`      | 710       | NTG Central theme — Roboto, green accent |
-| `dist/css/themes/typography-ntg.css`     | 40        | Bootstrap `--bs-*` overrides (NTG)       |
-| `dist/css/themes/typography-central.css` | 40        | Bootstrap `--bs-*` overrides (Central)   |
+| `dist/css/themes/theme-ntg.css`          | 638       | NT.GOV.AU theme — Lato, ochre accent     |
+| `dist/css/themes/theme-central.css`      | 538       | NTG Central theme — Roboto, green accent |
+| `dist/css/themes/theme-ntg.bundled.css`  | 813       | NT.GOV.AU bundled (all layers inlined)   |
+| `dist/css/themes/theme-central.bundled.css` | 713    | NTG Central bundled (all layers inlined) |
+| `dist/css/themes/typography-ntg.css`     | 38        | Bootstrap `--bs-*` overrides (NTG)       |
+| `dist/css/themes/typography-central.css` | 38        | Bootstrap `--bs-*` overrides (Central)   |
 
 Theme files (`theme-ntg.css`, `theme-central.css`) automatically import `common.css`, `grid.css`, `typography.css`, and `typography-literals.css` via relative `../` paths — so importing one theme file is all you need.
 
@@ -118,10 +126,12 @@ Theme files (`theme-ntg.css`, `theme-central.css`) automatically import `common.
 │       ├── base-variables.css # Unprefixed semantic defaults — NTG (84 vars)
 │       ├── index.css          # Barrel: all layers with NTG defaults
 │       └── themes/
-│           ├── theme-ntg.css          # NT.GOV.AU theme — Lato, ochre (810 vars)
-│           ├── theme-central.css      # NTG Central theme — Roboto, green (710 vars)
-│           ├── typography-ntg.css     # Bootstrap --bs-* overrides, NTG (40 vars)
-│           └── typography-central.css # Bootstrap --bs-* overrides, Central (40 vars)
+│           ├── theme-ntg.css              # NT.GOV.AU theme — Lato, ochre (638 vars)
+│           ├── theme-central.css          # NTG Central theme — Roboto, green (538 vars)
+│           ├── theme-ntg.bundled.css      # NT.GOV.AU bundled — all layers inlined (813 vars)
+│           ├── theme-central.bundled.css  # NTG Central bundled — all layers inlined (713 vars)
+│           ├── typography-ntg.css         # Bootstrap --bs-* overrides, NTG (38 vars)
+│           └── typography-central.css     # Bootstrap --bs-* overrides, Central (38 vars)
 └── scripts/                   # Build scripts
     ├── build-tokens.js        # CSS generator
     ├── validate-tokens.js     # Validates tokens.json structure
@@ -136,15 +146,16 @@ To update tokens:
 
 1. Export updated tokens from Figma and replace `tokens.json` at the package root.
 2. Validate, build, and verify:
-
-```bash
-npm run build          # validate + generate CSS + generate JS/TS
+Full build chain: validate tokens → generate CSS → generate JS/TS → validate CSS
 ```
 
 Individual steps:
 
 ```bash
 npm run tokens:validate  # Validate tokens.json structure and report statistics
+npm run tokens:build     # Generate CSS files into dist/css/ (12 files)
+npm run build:js         # Generate JS/TS files into dist/ (3 files)
+npm run validate:css     # Validate generated CSS (self-refs, undefined vars, broken imports, RGB, duplicates)and report statistics
 npm run tokens:build     # Generate CSS files into dist/css/
 npm run build:js         # Generate JS/TS files into dist/
 ```

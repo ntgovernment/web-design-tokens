@@ -1,16 +1,16 @@
-name: Publish to GitHub Packages
+name: CI
 
 on:
   push:
-    tags:
-      - "v*"
+    branches: [dev, main]
+  pull_request:
+    branches: [dev, main]
 
 permissions:
-  packages: write
   contents: read
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,13 +19,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          registry-url: "https://npm.pkg.github.com"
-          scope: "@ntgovernment"
 
       - name: Build and validate
         run: npm run build
-
-      - name: Publish
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
