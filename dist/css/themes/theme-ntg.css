@@ -11,7 +11,7 @@
  * Import order: common.css → grid.css → typography.css → typography-literals.css → theme
  * Location: dist/css/themes/
  * 
- * Generated: 2026-03-30T11:48:53.386Z
+ * Generated: 2026-04-19T02:13:04.978Z
  * Source: Figma Design Tokens
  */
 
@@ -100,8 +100,9 @@
   --ntg-clr-border-accent: var(--ntg-ochre-02-d);
   --ntg-clr-text-default: var(--ntg-neutral-09);
   --ntg-clr-text-inverse: var(--ntg-neutral-white);
-  --ntg-clr-text-muted: var(--ntg-neutral-07);
+  --ntg-clr-text-alt: var(--ntg-neutral-07);
   --ntg-clr-text-emphasis: var(--ntg-ochre-02-d);
+  --ntg-clr-text-muted: var(--ntg-neutral-05);
   --ntg-clr-link-default: var(--ntg-blue-03-d);
   --ntg-clr-link-hover: var(--ntg-ochre-02-d);
   --ntg-clr-link-visited: #7c19aa;
@@ -124,8 +125,8 @@
   --ntg-clr-misc-black: var(--ntg-neutral-black);
   /* Backdrop of modal */
   --ntg-clr-misc-transparent: #ffffff;
-  --ntg-type-font-default: Lato;
-  --ntg-type-font-alt: Arial;
+  --ntg-type-font-family-default: Lato;
+  --ntg-type-font-family-alt: Arial;
   --ntg-type-desktop-h1-size: var(--type-heading-h1-size);
   --ntg-type-desktop-h2-size: var(--type-heading-h2-size);
   --ntg-type-desktop-h3-size: var(--type-heading-h3-size);
@@ -156,15 +157,18 @@
   --ntg-radii-none: var(--radii-none);
   --ntg-radii-button: 0px;
   --ntg-radii-sm: var(--radii-sm);
-  --ntg-radii-md: 20px;
+  --ntg-radii-md: 8px;
+  --ntg-radii-full: 100px;
   --ntg-radii-lg: var(--radii-lg);
+  --ntg-radii-xl: 16px;
   --ntg-type-link-default-decoration: var(--type-link-default-decoration);
   --ntg-type-link-default-paragraph-spacing: var(--type-link-default-paragraph-spacing);
   --ntg-type-link-default-bold-decoration: var(--type-link-default-bold-decoration);
   --ntg-type-link-default-bold-paragraph-spacing: var(--type-link-default-bold-paragraph-spacing);
   --ntg-type-link-sm-decoration: var(--type-link-sm-decoration);
   --ntg-type-caption-default-paragraph-spacing: var(--type-caption-default-paragraph-spacing);
-  --ntg-type-uppercase-small-text-transform: var(--type-uppercase-small-text-transform);
+  --ntg-type-uppercase-sm-text-transform: var(--type-uppercase-sm-text-transform);
+  --ntg-type-uppercase-md-text-transform: var(--type-uppercase-md-text-transform);
   --ntg-type-uppercase-default-text-transform: var(--type-uppercase-default-text-transform);
   --ntg-type-mobile-link-default-decoration: var(--type-mobile-link-default-decoration);
   --ntg-type-mobile-link-default-paragraph-spacing: var(--type-mobile-link-default-paragraph-spacing);
@@ -488,14 +492,18 @@
   --ntg-clr-text-inverse-g: var(--ntg-neutral-white-g);
   --ntg-clr-text-inverse-b: var(--ntg-neutral-white-b);
   --ntg-clr-text-inverse-rgb: var(--ntg-clr-text-inverse-r), var(--ntg-clr-text-inverse-g), var(--ntg-clr-text-inverse-b);
-  --ntg-clr-text-muted-r: var(--ntg-neutral-07-r);
-  --ntg-clr-text-muted-g: var(--ntg-neutral-07-g);
-  --ntg-clr-text-muted-b: var(--ntg-neutral-07-b);
-  --ntg-clr-text-muted-rgb: var(--ntg-clr-text-muted-r), var(--ntg-clr-text-muted-g), var(--ntg-clr-text-muted-b);
+  --ntg-clr-text-alt-r: var(--ntg-neutral-07-r);
+  --ntg-clr-text-alt-g: var(--ntg-neutral-07-g);
+  --ntg-clr-text-alt-b: var(--ntg-neutral-07-b);
+  --ntg-clr-text-alt-rgb: var(--ntg-clr-text-alt-r), var(--ntg-clr-text-alt-g), var(--ntg-clr-text-alt-b);
   --ntg-clr-text-emphasis-r: var(--ntg-ochre-02-d-r);
   --ntg-clr-text-emphasis-g: var(--ntg-ochre-02-d-g);
   --ntg-clr-text-emphasis-b: var(--ntg-ochre-02-d-b);
   --ntg-clr-text-emphasis-rgb: var(--ntg-clr-text-emphasis-r), var(--ntg-clr-text-emphasis-g), var(--ntg-clr-text-emphasis-b);
+  --ntg-clr-text-muted-r: var(--ntg-neutral-05-r);
+  --ntg-clr-text-muted-g: var(--ntg-neutral-05-g);
+  --ntg-clr-text-muted-b: var(--ntg-neutral-05-b);
+  --ntg-clr-text-muted-rgb: var(--ntg-clr-text-muted-r), var(--ntg-clr-text-muted-g), var(--ntg-clr-text-muted-b);
   --ntg-clr-link-default-r: var(--ntg-blue-03-d-r);
   --ntg-clr-link-default-g: var(--ntg-blue-03-d-g);
   --ntg-clr-link-default-b: var(--ntg-blue-03-d-b);
@@ -716,10 +724,14 @@
   --ntg-type-caption-default-paragraph-spacing-g: var(--type-caption-default-paragraph-spacing-g);
   --ntg-type-caption-default-paragraph-spacing-b: var(--type-caption-default-paragraph-spacing-b);
   --ntg-type-caption-default-paragraph-spacing-rgb: var(--ntg-type-caption-default-paragraph-spacing-r), var(--ntg-type-caption-default-paragraph-spacing-g), var(--ntg-type-caption-default-paragraph-spacing-b);
-  --ntg-type-uppercase-small-text-transform-r: var(--type-uppercase-small-text-transform-r);
-  --ntg-type-uppercase-small-text-transform-g: var(--type-uppercase-small-text-transform-g);
-  --ntg-type-uppercase-small-text-transform-b: var(--type-uppercase-small-text-transform-b);
-  --ntg-type-uppercase-small-text-transform-rgb: var(--ntg-type-uppercase-small-text-transform-r), var(--ntg-type-uppercase-small-text-transform-g), var(--ntg-type-uppercase-small-text-transform-b);
+  --ntg-type-uppercase-sm-text-transform-r: var(--type-uppercase-sm-text-transform-r);
+  --ntg-type-uppercase-sm-text-transform-g: var(--type-uppercase-sm-text-transform-g);
+  --ntg-type-uppercase-sm-text-transform-b: var(--type-uppercase-sm-text-transform-b);
+  --ntg-type-uppercase-sm-text-transform-rgb: var(--ntg-type-uppercase-sm-text-transform-r), var(--ntg-type-uppercase-sm-text-transform-g), var(--ntg-type-uppercase-sm-text-transform-b);
+  --ntg-type-uppercase-md-text-transform-r: var(--type-uppercase-md-text-transform-r);
+  --ntg-type-uppercase-md-text-transform-g: var(--type-uppercase-md-text-transform-g);
+  --ntg-type-uppercase-md-text-transform-b: var(--type-uppercase-md-text-transform-b);
+  --ntg-type-uppercase-md-text-transform-rgb: var(--ntg-type-uppercase-md-text-transform-r), var(--ntg-type-uppercase-md-text-transform-g), var(--ntg-type-uppercase-md-text-transform-b);
   --ntg-type-uppercase-default-text-transform-r: var(--type-uppercase-default-text-transform-r);
   --ntg-type-uppercase-default-text-transform-g: var(--type-uppercase-default-text-transform-g);
   --ntg-type-uppercase-default-text-transform-b: var(--type-uppercase-default-text-transform-b);
@@ -762,8 +774,9 @@
   --clr-border-accent: var(--ntg-clr-border-accent);
   --clr-text-default: var(--ntg-clr-text-default);
   --clr-text-inverse: var(--ntg-clr-text-inverse);
-  --clr-text-muted: var(--ntg-clr-text-muted);
+  --clr-text-alt: var(--ntg-clr-text-alt);
   --clr-text-emphasis: var(--ntg-clr-text-emphasis);
+  --clr-text-muted: var(--ntg-clr-text-muted);
   --clr-link-default: var(--ntg-clr-link-default);
   --clr-link-hover: var(--ntg-clr-link-hover);
   --clr-link-visited: var(--ntg-clr-link-visited);
@@ -783,8 +796,8 @@
   --clr-misc-backdrop: var(--ntg-clr-misc-backdrop);
   --clr-misc-black: var(--ntg-clr-misc-black);
   --clr-misc-transparent: var(--ntg-clr-misc-transparent);
-  --type-font-default: var(--ntg-type-font-default);
-  --type-font-alt: var(--ntg-type-font-alt);
+  --type-font-family-default: var(--ntg-type-font-family-default);
+  --type-font-family-alt: var(--ntg-type-font-family-alt);
   --type-desktop-h1-size: var(--ntg-type-desktop-h1-size);
   --type-desktop-h2-size: var(--ntg-type-desktop-h2-size);
   --type-desktop-h3-size: var(--ntg-type-desktop-h3-size);
@@ -818,7 +831,8 @@
   --type-link-default-bold-paragraph-spacing: var(--ntg-type-link-default-bold-paragraph-spacing);
   --type-link-sm-decoration: var(--ntg-type-link-sm-decoration);
   --type-caption-default-paragraph-spacing: var(--ntg-type-caption-default-paragraph-spacing);
-  --type-uppercase-small-text-transform: var(--ntg-type-uppercase-small-text-transform);
+  --type-uppercase-sm-text-transform: var(--ntg-type-uppercase-sm-text-transform);
+  --type-uppercase-md-text-transform: var(--ntg-type-uppercase-md-text-transform);
   --type-uppercase-default-text-transform: var(--ntg-type-uppercase-default-text-transform);
   --type-mobile-link-default-decoration: var(--ntg-type-mobile-link-default-decoration);
   --type-mobile-link-default-paragraph-spacing: var(--ntg-type-mobile-link-default-paragraph-spacing);

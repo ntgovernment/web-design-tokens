@@ -1,6 +1,6 @@
 {
   "name": "@ntgovernment/web-design-tokens",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Design tokens for the NT Government web design system — CSS custom properties and JS/TS token objects.",
   "license": "MIT",
   "type": "module",
@@ -43,7 +43,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ntgovernment/web-design-tokens.git"
+    "url": "git+https://github.com/ntgovernment/web-design-tokens.git"
   },
   "keywords": [
     "design-tokens",

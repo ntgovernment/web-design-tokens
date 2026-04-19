@@ -12,13 +12,16 @@
  * These values are extracted from design tokens and applied directly.
  * Components should use these literal variables for text-transform properties.
  * 
- * Generated: 2026-03-30T11:48:53.385Z
+ * Generated: 2026-04-19T02:13:04.974Z
  * Source: tokens.json
  */
 
 :root {
-  /* uppercase-small - literal value: uppercase */
-  --literal-text-transform-uppercase-small: uppercase;
+  /* uppercase-sm - literal value: uppercase */
+  --literal-text-transform-uppercase-sm: uppercase;
+
+  /* uppercase-md - literal value: uppercase */
+  --literal-text-transform-uppercase-md: uppercase;
 
   /* uppercase-default - literal value: uppercase */
   --literal-text-transform-uppercase-default: uppercase;

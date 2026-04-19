@@ -1,0 +1,31 @@
+/**
+ * @ntgovernment/web-design-tokens — CSS Barrel
+ *
+ * Imports all token layers in cascade order, giving you the full NT.GOV.AU
+ * theme with all semantic defaults:
+ *
+ *   common.css             — shadows, spacing, border widths, radii (27 vars)
+ *   grid.css               — Bootstrap-compatible grid breakpoints (15 vars)
+ *   typography.css         — theme-agnostic typography scale (149 vars)
+ *   typography-literals.css — literal text-transform values (4 vars)
+ *   base-variables.css     — unprefixed semantic defaults, NTG (84 vars)
+ *   theme-ntg.css          — NT.GOV.AU colour/type theme (810 vars);
+ *                            also re-imports common/grid/typography/typography-literals
+ *
+ * Note: theme-ntg.css re-imports the first four layers internally. The
+ * explicit imports here ensure base-variables.css sits before the theme in
+ * the cascade when bundlers flatten @import chains.
+ *
+ * To use the Central theme instead, import css/theme-central individually
+ * (it does not include base-variables.css or this barrel).
+ *
+ * Usage:
+ *   @import '@ntgovernment/web-design-tokens/css';
+ */
+
+@import "./common.css";
+@import "./grid.css";
+@import "./typography.css";
+@import "./typography-literals.css";
+@import "./base-variables.css";
+@import "./theme-ntg.css";

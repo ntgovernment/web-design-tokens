@@ -12,7 +12,7 @@
  * 1. Update tokens.json
  * 2. Run: npm run tokens:build
  * 
- * Generated: 2026-03-30T11:48:53.382Z
+ * Generated: 2026-04-19T02:13:04.968Z
  * Source: Figma Design Tokens
  */
 
@@ -83,16 +83,22 @@
   --type-caption-default-ls: 0px;
   --type-caption-default-paragraph-spacing: 1rem;
   /* For tags */
-  --type-uppercase-small-size: 0.75rem;
-  --type-uppercase-small-weight: 700;
-  --type-uppercase-small-lh: 1rem;
-  --type-uppercase-small-ls: 2px;
-  --type-uppercase-small-text-transform: uppercase;
+  --type-uppercase-sm-size: 0.75rem;
+  --type-uppercase-sm-weight: 700;
+  --type-uppercase-sm-lh: 1rem;
+  --type-uppercase-sm-ls: 1px;
+  --type-uppercase-sm-text-transform: uppercase;
+  /* For table headers */
+  --type-uppercase-md-size: 0.875rem;
+  --type-uppercase-md-weight: 700;
+  --type-uppercase-md-lh: 1.25rem;
+  --type-uppercase-md-ls: 0.5px;
+  --type-uppercase-md-text-transform: uppercase;
   /* For table headers */
   --type-uppercase-default-size: 1rem;
   --type-uppercase-default-weight: 700;
   --type-uppercase-default-lh: 1rem;
-  --type-uppercase-default-ls: 1px;
+  --type-uppercase-default-ls: 0px;
   --type-uppercase-default-text-transform: uppercase;
   --type-button-label-default-size: 1rem;
   --type-button-label-default-weight: 700;
@@ -158,7 +164,7 @@
   --type-mobile-tag-size: 0.75rem;
   --type-mobile-tag-weight: 700;
   --type-mobile-tag-lh: 1rem;
-  --type-mobile-tag-ls: 2px;
+  --type-mobile-tag-ls: 1px;
   --type-mobile-tag-text-transform: uppercase;
   --type-mobile-button-default-size: 1rem;
   --type-mobile-button-default-weight: 700;

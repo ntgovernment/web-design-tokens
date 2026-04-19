@@ -16,7 +16,7 @@
  *   3. JavaScript: document.body.dataset.theme = 'central';
  * 
  * Default values from: NT.GOV.AU Theme
- * Generated: 2026-03-30T11:48:53.392Z
+ * Generated: 2026-04-19T02:13:04.984Z
  */
 
 :root {
@@ -40,8 +40,9 @@
   --clr-border-accent: var(--ntg-ochre-02-d);
   --clr-text-default: var(--ntg-neutral-09);
   --clr-text-inverse: var(--ntg-neutral-white);
-  --clr-text-muted: var(--ntg-neutral-07);
+  --clr-text-alt: var(--ntg-neutral-07);
   --clr-text-emphasis: var(--ntg-ochre-02-d);
+  --clr-text-muted: var(--ntg-neutral-05);
   --clr-link-default: var(--ntg-blue-03-d);
   --clr-link-hover: var(--ntg-ochre-02-d);
   --clr-link-visited: #7c19aa;
@@ -64,8 +65,8 @@
   --clr-misc-black: var(--ntg-neutral-black);
   /* Backdrop of modal */
   --clr-misc-transparent: #ffffff;
-  --type-font-default: Lato;
-  --type-font-alt: Arial;
+  --type-font-family-default: Lato;
+  --type-font-family-alt: Arial;
   --type-desktop-h1-size: var(--type-heading-h1-size);
   --type-desktop-h2-size: var(--type-heading-h2-size);
   --type-desktop-h3-size: var(--type-heading-h3-size);
@@ -99,7 +100,8 @@
   --type-link-default-bold-paragraph-spacing: var(--type-link-default-bold-paragraph-spacing);
   --type-link-sm-decoration: var(--type-link-sm-decoration);
   --type-caption-default-paragraph-spacing: var(--type-caption-default-paragraph-spacing);
-  --type-uppercase-small-text-transform: var(--type-uppercase-small-text-transform);
+  --type-uppercase-sm-text-transform: var(--type-uppercase-sm-text-transform);
+  --type-uppercase-md-text-transform: var(--type-uppercase-md-text-transform);
   --type-uppercase-default-text-transform: var(--type-uppercase-default-text-transform);
   --type-mobile-link-default-decoration: var(--type-mobile-link-default-decoration);
   --type-mobile-link-default-paragraph-spacing: var(--type-mobile-link-default-paragraph-spacing);
