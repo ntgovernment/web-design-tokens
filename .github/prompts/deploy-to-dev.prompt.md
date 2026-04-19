@@ -55,6 +55,7 @@ Compose a commit message that follows [Conventional Commits](https://www.convent
 Base the message on the changes staged in step 2. Use `git diff --cached --stat` and `git diff --cached` to read the actual diff rather than guessing.
 
 Example:
+
 ```
 feat(tokens): extract design tokens into standalone npm package
 
@@ -82,14 +83,33 @@ git -C "D:/Projects/web-design-tokens" push origin dev
 ```
 
 If the remote `origin` does not exist yet, report it and ask the user to add it:
+
 ```bash
 git remote add origin https://github.com/ntgovernment/web-design-tokens.git
+```
+
+## Step 7 — Tag the release
+
+Create an annotated-style lightweight tag matching the version from step 3 and push it:
+
+```bash
+git -C "D:/Projects/web-design-tokens" tag v<version>
+git -C "D:/Projects/web-design-tokens" push origin v<version>
+```
+
+Example for version 3.0.0:
+
+```bash
+git -C "D:/Projects/web-design-tokens" tag v3.0.0
+git -C "D:/Projects/web-design-tokens" push origin v3.0.0
 ```
 
 ## After pushing
 
 Report:
+
 - The commit hash and short message
 - The version number used
 - The branch and remote it was pushed to
+- The tag created and pushed
 - Any warnings from git

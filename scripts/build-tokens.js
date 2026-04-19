@@ -60,6 +60,48 @@ const themesDir = join(rootDir, "dist/css/themes");
 mkdirSync(cssDir, { recursive: true });
 mkdirSync(themesDir, { recursive: true });
 
+/**
+ * Naming normalization map.
+ * Applied when converting tokens.json keys to CSS variable name segments.
+ * Provides consistency (small→sm, xxl→2xl) without modifying tokens.json.
+ */
+const NAME_NORMALIZATION = {
+  small: "sm",
+  xxl: "2xl",
+};
+
+/**
+ * Normalize a token name segment using the NAME_NORMALIZATION map.
+ * E.g. "button-label-small" → "button-label-sm", "xxl" → "2xl"
+ */
+function normalizeTokenName(name) {
+  for (const [from, to] of Object.entries(NAME_NORMALIZATION)) {
+    // Replace as a whole word segment (between hyphens or at start/end)
+    name = name.replace(new RegExp(`(^|(?<=-))(${from})($|(?=-))`, "g"), to);
+  }
+  return name;
+}
+
+/**
+ * Generate deprecated backward-compat CSS aliases for renamed tokens.
+ * Only generates aliases for variables that were actually renamed during
+ * normalization (i.e. those with a non-null `originalName` property).
+ *
+ * @param {Array<{name: string, value: string, originalName?: string|null}>} variables
+ * @returns {string[]} CSS lines for deprecated aliases (empty if none apply)
+ */
+function generateDeprecatedAliases(variables) {
+  const lines = [];
+  for (const v of variables) {
+    if (v.originalName) {
+      lines.push(
+        `  ${v.originalName}: var(${v.name}); /* @deprecated use ${v.name} */`,
+      );
+    }
+  }
+  return lines;
+}
+
 console.log("🎨 Building Design Tokens...\n");
 
 // Check if tokens.json exists
@@ -280,10 +322,16 @@ function extractTypographyTokens() {
     Object.entries(tokens.font["ntg-type"]).forEach(([category, styles]) => {
       Object.entries(styles).forEach(([variant, token]) => {
         if (token.type === "custom-fontStyle" && token.value) {
-          const prefix = `type-${category}-${variant}`
+          const rawPrefix = `type-${category}-${variant}`
             .replace(/[()]/g, "")
             .replace(/\s+/g, "-");
+          const prefix = normalizeTokenName(rawPrefix);
+          const renamed = prefix !== rawPrefix;
           const props = token.value;
+
+          // Helper to build originalName only when normalization occurred
+          const orig = (suffix) =>
+            renamed ? `--${rawPrefix}-${suffix}` : null;
 
           // Extract all font properties EXCEPT fontFamily (which is theme-specific)
           if (props.fontSize !== undefined) {
@@ -291,6 +339,7 @@ function extractTypographyTokens() {
               name: `--${prefix}-size`,
               value: processDimension(props.fontSize, "typography"),
               description: token.description,
+              originalName: orig("size"),
             });
           }
           if (props.fontWeight !== undefined) {
@@ -298,6 +347,7 @@ function extractTypographyTokens() {
               name: `--${prefix}-weight`,
               value: props.fontWeight,
               description: null,
+              originalName: orig("weight"),
             });
           }
           if (props.lineHeight !== undefined) {
@@ -305,6 +355,7 @@ function extractTypographyTokens() {
               name: `--${prefix}-lh`,
               value: processDimension(props.lineHeight, "typography"),
               description: null,
+              originalName: orig("lh"),
             });
           }
           if (props.letterSpacing !== undefined) {
@@ -315,6 +366,7 @@ function extractTypographyTokens() {
                   ? "0px"
                   : processDimension(props.letterSpacing, "typography"),
               description: null,
+              originalName: orig("ls"),
             });
           }
           if (props.textDecoration && props.textDecoration !== "none") {
@@ -322,6 +374,7 @@ function extractTypographyTokens() {
               name: `--${prefix}-decoration`,
               value: props.textDecoration,
               description: null,
+              originalName: orig("decoration"),
             });
           }
           if (props.textCase && props.textCase !== "none") {
@@ -329,6 +382,7 @@ function extractTypographyTokens() {
               name: `--${prefix}-text-transform`,
               value: props.textCase,
               description: null,
+              originalName: orig("text-transform"),
             });
           }
           if (props.paragraphSpacing && props.paragraphSpacing !== 0) {
@@ -336,6 +390,7 @@ function extractTypographyTokens() {
               name: `--${prefix}-paragraph-spacing`,
               value: processDimension(props.paragraphSpacing, "typography"),
               description: null,
+              originalName: orig("paragraph-spacing"),
             });
           }
           if (props.fontStyle && props.fontStyle !== "normal") {
@@ -343,6 +398,7 @@ function extractTypographyTokens() {
               name: `--${prefix}-style`,
               value: props.fontStyle,
               description: null,
+              originalName: orig("style"),
             });
           }
         }
@@ -354,10 +410,14 @@ function extractTypographyTokens() {
   if (tokens.font && tokens.font["ntg-type-sm"]) {
     Object.entries(tokens.font["ntg-type-sm"]).forEach(([variant, token]) => {
       if (token.type === "custom-fontStyle" && token.value) {
-        const prefix = `type-mobile-${variant}`
+        const rawPrefix = `type-mobile-${variant}`
           .replace(/[()]/g, "")
           .replace(/\s+/g, "-");
+        const prefix = normalizeTokenName(rawPrefix);
+        const renamed = prefix !== rawPrefix;
         const props = token.value;
+
+        const orig = (suffix) => (renamed ? `--${rawPrefix}-${suffix}` : null);
 
         // Extract all font properties EXCEPT fontFamily
         if (props.fontSize !== undefined) {
@@ -365,6 +425,7 @@ function extractTypographyTokens() {
             name: `--${prefix}-size`,
             value: processDimension(props.fontSize, "typography"),
             description: token.description,
+            originalName: orig("size"),
           });
         }
         if (props.fontWeight !== undefined) {
@@ -372,6 +433,7 @@ function extractTypographyTokens() {
             name: `--${prefix}-weight`,
             value: props.fontWeight,
             description: null,
+            originalName: orig("weight"),
           });
         }
         if (props.lineHeight !== undefined) {
@@ -379,6 +441,7 @@ function extractTypographyTokens() {
             name: `--${prefix}-lh`,
             value: processDimension(props.lineHeight, "typography"),
             description: null,
+            originalName: orig("lh"),
           });
         }
         if (props.letterSpacing !== undefined) {
@@ -389,6 +452,7 @@ function extractTypographyTokens() {
                 ? "0px"
                 : processDimension(props.letterSpacing, "typography"),
             description: null,
+            originalName: orig("ls"),
           });
         }
         if (props.textDecoration && props.textDecoration !== "none") {
@@ -396,6 +460,7 @@ function extractTypographyTokens() {
             name: `--${prefix}-decoration`,
             value: props.textDecoration,
             description: null,
+            originalName: orig("decoration"),
           });
         }
         if (props.textCase && props.textCase !== "none") {
@@ -403,6 +468,7 @@ function extractTypographyTokens() {
             name: `--${prefix}-text-transform`,
             value: props.textCase,
             description: null,
+            originalName: orig("text-transform"),
           });
         }
         if (props.paragraphSpacing && props.paragraphSpacing !== 0) {
@@ -410,6 +476,7 @@ function extractTypographyTokens() {
             name: `--${prefix}-paragraph-spacing`,
             value: processDimension(props.paragraphSpacing, "typography"),
             description: null,
+            originalName: orig("paragraph-spacing"),
           });
         }
       }
@@ -422,7 +489,7 @@ function extractTypographyTokens() {
 // Helper to map theme token paths to typography variable names
 function mapToTypographyVar(path) {
   // Map: themes.ntg.type.desktop.h1.size -> --type-heading-h1-size
-  // Map: themes.ntg.type.mobile.h2.weight -> --type-mobile-heading-h2-weight
+  // Map: themes.ntg.type.mobile.h2.size -> --type-mobile-h2-size
   const parts = path.split(".");
 
   // Skip themes.ntg/central.type prefix
@@ -431,13 +498,23 @@ function mapToTypographyVar(path) {
     const variant = parts[4]; // 'h1', 'h2', 'body-default', etc
     const property = parts[5]; // 'size', 'weight', 'lh', 'ls'
 
+    // Normalize variant names to match typography.css output
+    const normalizedVariant = normalizeTokenName(variant);
+
     if (context === "desktop") {
-      // Map h1-h6 to heading-h1, etc
-      let category = variant.match(/^h[1-6]$/) ? `heading-${variant}` : variant;
+      // Map h1-h6 to heading-h1, etc. (desktop typography uses heading- prefix)
+      let category = normalizedVariant.match(/^h[1-6]$/)
+        ? `heading-${normalizedVariant}`
+        : normalizedVariant;
+      // Map button-default/button-sm to button-label-default/button-label-sm
+      // to match the actual font.ntg-type.button-label.* token names
+      category = category
+        .replace(/^button-default$/, "button-label-default")
+        .replace(/^button-sm$/, "button-label-sm");
       return `--type-${category}-${property}`;
     } else if (context === "mobile") {
-      let category = variant.match(/^h[1-6]$/) ? `heading-${variant}` : variant;
-      return `--type-mobile-${category}-${property}`;
+      // Mobile typography does NOT use heading- prefix (font.ntg-type-sm uses flat keys)
+      return `--type-mobile-${normalizedVariant}-${property}`;
     }
   }
 
@@ -490,12 +567,15 @@ function extractCommonTokens() {
     if (ntgTheme["border-width"]) {
       Object.entries(ntgTheme["border-width"]).forEach(([key, token]) => {
         if (token.value !== undefined) {
-          const varName = `--border-width-${key}`;
+          const normalizedKey = normalizeTokenName(key);
+          const varName = `--border-width-${normalizedKey}`;
           const cssValue = `${token.value}px`;
           common.borderWidths.push({
             name: varName,
             value: cssValue,
             description: token.description,
+            originalName:
+              normalizedKey !== key ? `--border-width-${key}` : null,
           });
         }
       });
@@ -647,6 +727,19 @@ function generateCommonCSS(commonTokens) {
     });
   }
 
+  // Deprecated aliases for renamed tokens (backward compat)
+  const allVars = [
+    ...commonTokens.shadows,
+    ...commonTokens.spacing,
+    ...commonTokens.borderWidths,
+    ...commonTokens.radii,
+  ];
+  const deprecatedLines = generateDeprecatedAliases(allVars);
+  if (deprecatedLines.length > 0) {
+    sections.push("\n  /* Deprecated aliases — backward compatibility */");
+    sections.push(...deprecatedLines);
+  }
+
   const footer = `\n}\n`;
 
   return header + "\n" + sections.join("\n") + footer;
@@ -725,6 +818,14 @@ function generateTypographyCSS(typography) {
       lines.push(`${comment}  ${v.name}: ${v.value};`);
     });
   });
+
+  // Deprecated aliases for renamed typography tokens (backward compat)
+  const deprecatedLines = generateDeprecatedAliases(typography);
+  if (deprecatedLines.length > 0) {
+    lines.push("");
+    lines.push("  /* Deprecated aliases — backward compatibility */");
+    lines.push(...deprecatedLines);
+  }
 
   const footer = `\n}\n`;
 
@@ -867,6 +968,11 @@ function generateBaseVariablesCSS(semanticVars, baseThemeName) {
   const lines = [];
 
   semanticVars.forEach((v) => {
+    // Skip self-referencing variables (--X: var(--X)) which create CSS circular references
+    const refMatch = v.value.match(/^var\((--[^)]+)\)$/);
+    if (refMatch && refMatch[1] === v.name) {
+      return;
+    }
     const comment = v.description ? `  /* ${v.description} */\n` : "";
     lines.push(`${comment}  ${v.name}: ${v.value};`);
   });
@@ -1166,7 +1272,12 @@ function generateCSS(themeName, themeData, prefix, useCommonVars = false) {
       });
     }
     // If this is a var() reference to another color, also generate RGB components
-    else if (typeof v.value === "string" && v.value.match(/^var\(--[^)]+\)$/)) {
+    // Only for colour tokens (variable name contains 'clr-') — skip typography, radii, etc.
+    else if (
+      typeof v.value === "string" &&
+      v.value.match(/^var\(--[^)]+\)$/) &&
+      v.name.includes("clr-")
+    ) {
       // Extract the referenced variable name
       const refMatch = v.value.match(/^var\((--[^)]+)\)$/);
       if (refMatch) {
@@ -1238,9 +1349,27 @@ function generateCSS(themeName, themeData, prefix, useCommonVars = false) {
  * @param {string} themeName - Display name (e.g., "NT.GOV.AU")
  * @param {object} themeData - Complete theme token data
  * @param {string} prefix - Variable prefix (e.g., "ntg", "central")
+ * @param {object} primitives - Primitive colour token data (tokens.primitives[key])
  * @returns {string} Complete Bootstrap override CSS content
  */
-function generateBootstrapCSS(themeName, themeData, prefix) {
+function generateBootstrapCSS(themeName, themeData, prefix, primitives) {
+  // Resolve primitive group names (NTG uses "neutral", Central uses "neutrals")
+  const neutralGroup = primitives.neutral
+    ? "neutral"
+    : primitives.neutrals
+      ? "neutrals"
+      : "neutral";
+  // Resolve shade suffix: NTG uses "-03-d" (dark), Central uses "-03"
+  const hasDarkShades =
+    primitives[Object.keys(primitives).find((g) => primitives[g]?.["03-d"])]?.[
+      "03-d"
+    ] !== undefined;
+  const darkShade = hasDarkShades ? "03-d" : "03";
+  // Resolve coral availability (NTG has coral, Central doesn't)
+  const hasCoralGroup = !!primitives.coral;
+  const codeColorVar = hasCoralGroup
+    ? `var(--${prefix}-coral-${darkShade})`
+    : `var(--${prefix}-blue-${darkShade})`;
   // Resolve link colors to hex values
   const linkDefaultHex = resolveColorValue("clr.link.default", themeData);
   const linkHoverHex = resolveColorValue("clr.link.hover", themeData);
@@ -1292,8 +1421,8 @@ function generateBootstrapCSS(themeName, themeData, prefix) {
   /* ===== TYPOGRAPHY ===== */
   
   /* Font Families */
-  --bs-font-sans-serif: var(--${prefix}-type-font-default), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --bs-body-font-family: var(--${prefix}-type-font-default), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --bs-font-sans-serif: var(--${prefix}-type-font-family-default), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --bs-body-font-family: var(--${prefix}-type-font-family-default), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   
   /* Body Typography */
   --bs-body-font-size: var(--${prefix}-type-desktop-body-default-size);
@@ -1323,13 +1452,13 @@ function generateBootstrapCSS(themeName, themeData, prefix) {
   
   /* Primary Brand Colors mapped to ${themeName} palette */
   --bs-primary: var(--${prefix}-clr-action-pirmary);
-  --bs-secondary: var(--${prefix}-neutral-06);
-  --bs-success: var(--${prefix}-success-03-d);
-  --bs-info: var(--${prefix}-info-03-d);
-  --bs-warning: var(--${prefix}-warning-03-d);
-  --bs-danger: var(--${prefix}-danger-03-d);
-  --bs-light: var(--${prefix}-neutral-01);
-  --bs-dark: var(--${prefix}-blue-03-d);
+  --bs-secondary: var(--${prefix}-${neutralGroup}-06);
+  --bs-success: var(--${prefix}-success-${darkShade});
+  --bs-info: var(--${prefix}-info-${darkShade});
+  --bs-warning: var(--${prefix}-warning-${darkShade});
+  --bs-danger: var(--${prefix}-danger-${darkShade});
+  --bs-light: var(--${prefix}-${neutralGroup}-01);
+  --bs-dark: var(--${prefix}-blue-${darkShade});
   
   /* Emphasis Colors */
   --bs-emphasis-color: var(--${prefix}-clr-text-emphasis);
@@ -1348,7 +1477,7 @@ function generateBootstrapCSS(themeName, themeData, prefix) {
   /* ===== COMPONENT-SPECIFIC ===== */
   
   /* Code */
-  --bs-code-color: var(--${prefix}-coral-03-d);
+  --bs-code-color: ${codeColorVar};
   
   /* Highlight/Mark */
   --bs-highlight-color: var(--${prefix}-clr-text-default);
@@ -1563,6 +1692,7 @@ try {
     "NT.GOV.AU",
     ntgBootstrapData,
     "ntg",
+    tokens.primitives?.ntg || {},
   );
   const ntgBootstrapPath = join(themesDir, "typography-ntg.css");
   writeFileSync(ntgBootstrapPath, ntgBootstrapCSS, "utf-8");
@@ -1577,6 +1707,7 @@ try {
     "NTG Central",
     centralBootstrapData,
     "central",
+    tokens.primitives?.central || {},
   );
   const centralBootstrapPath = join(themesDir, "typography-central.css");
   writeFileSync(centralBootstrapPath, centralBootstrapCSS, "utf-8");
@@ -1586,6 +1717,87 @@ try {
     "  ❌ Failed to generate Bootstrap typography overrides:",
     error.message,
   );
+  process.exit(1);
+}
+
+// Build standalone bundled theme files (inline all shared layers — no @import)
+try {
+  console.log("\n📦 Building bundled theme files...");
+
+  const sharedLayerFiles = [
+    join(cssDir, "common.css"),
+    join(cssDir, "grid.css"),
+    join(cssDir, "typography.css"),
+    join(cssDir, "typography-literals.css"),
+  ];
+
+  /**
+   * Read each shared layer file, extract the content between :root { ... },
+   * then concatenate with the theme file's own :root content (minus @import lines).
+   */
+  function buildBundledTheme(themePath, themeName) {
+    const allVarLines = [];
+
+    // 1. Collect variables from shared layers
+    for (const layerPath of sharedLayerFiles) {
+      const content = readFileSync(layerPath, "utf-8");
+      const rootMatch = content.match(/:root\s*\{([\s\S]*?)\n\}/);
+      if (rootMatch) {
+        allVarLines.push(`  /* --- ${layerPath.split(/[/\\]/).pop()} --- */`);
+        allVarLines.push(rootMatch[1].trimEnd());
+      }
+    }
+
+    // 2. Collect variables from the theme file (strip @import and :root wrapper)
+    const themeContent = readFileSync(themePath, "utf-8");
+    const themeRootMatch = themeContent.match(/:root\s*\{([\s\S]*?)\n\}/);
+    if (themeRootMatch) {
+      allVarLines.push(`\n  /* --- ${themePath.split(/[/\\]/).pop()} --- */`);
+      allVarLines.push(themeRootMatch[1].trimEnd());
+    }
+
+    const bundledCSS = `/**
+ * ${themeName} Theme (Bundled) - Auto-generated from design tokens
+ *
+ * ⚠️ DO NOT EDIT THIS FILE MANUALLY ⚠️
+ *
+ * Self-contained theme file with all shared layers inlined.
+ * No @import statements — safe for all bundler configurations.
+ *
+ * Generated: ${new Date().toISOString()}
+ * Source: Figma Design Tokens
+ */
+
+:root {
+${allVarLines.join("\n")}
+}
+`;
+    return bundledCSS;
+  }
+
+  const ntgBundledCSS = buildBundledTheme(
+    join(themesDir, "theme-ntg.css"),
+    "NT.GOV.AU",
+  );
+  writeFileSync(
+    join(themesDir, "theme-ntg.bundled.css"),
+    ntgBundledCSS,
+    "utf-8",
+  );
+  console.log("  ✓ Generated dist/css/themes/theme-ntg.bundled.css");
+
+  const centralBundledCSS = buildBundledTheme(
+    join(themesDir, "theme-central.css"),
+    "NTG Central",
+  );
+  writeFileSync(
+    join(themesDir, "theme-central.bundled.css"),
+    centralBundledCSS,
+    "utf-8",
+  );
+  console.log("  ✓ Generated dist/css/themes/theme-central.bundled.css");
+} catch (error) {
+  console.error("  ❌ Failed to generate bundled themes:", error.message);
   process.exit(1);
 }
 
@@ -1642,13 +1854,17 @@ console.log("  - dist/css/typography.css (theme-agnostic fonts)");
 console.log(
   "  - dist/css/typography-literals.css (literal values for text-transform)",
 );
-console.log(
-  "  - dist/css/base-variables.css (unprefixed semantic variables)",
-);
+console.log("  - dist/css/base-variables.css (unprefixed semantic variables)");
 console.log("  - dist/css/index.css (barrel — all layers with NTG defaults)");
 console.log("  - dist/css/themes/theme-ntg.css (NT.GOV.AU theme)");
 console.log("  - dist/css/themes/theme-central.css (NTG Central theme)");
-console.log("  - dist/css/themes/typography-ntg.css (Bootstrap overrides for NTG)");
+console.log("  - dist/css/themes/theme-ntg.bundled.css (NT.GOV.AU standalone)");
+console.log(
+  "  - dist/css/themes/theme-central.bundled.css (NTG Central standalone)",
+);
+console.log(
+  "  - dist/css/themes/typography-ntg.css (Bootstrap overrides for NTG)",
+);
 console.log(
   "  - dist/css/themes/typography-central.css (Bootstrap overrides for Central)",
 );

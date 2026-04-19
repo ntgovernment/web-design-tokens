@@ -12,7 +12,7 @@
  * 1. Update tokens.json
  * 2. Run: npm run tokens:build
  * 
- * Generated: 2026-04-19T02:13:04.968Z
+ * Generated: 2026-04-19T07:46:10.164Z
  * Source: Figma Design Tokens
  */
 
@@ -104,10 +104,10 @@
   --type-button-label-default-weight: 700;
   --type-button-label-default-lh: 1rem;
   --type-button-label-default-ls: 0px;
-  --type-button-label-small-size: 0.875rem;
-  --type-button-label-small-weight: 700;
-  --type-button-label-small-lh: 1rem;
-  --type-button-label-small-ls: 0px;
+  --type-button-label-sm-size: 0.875rem;
+  --type-button-label-sm-weight: 700;
+  --type-button-label-sm-lh: 1rem;
+  --type-button-label-sm-ls: 0px;
   /* Mobile heading 1 */
   --type-mobile-h1-size: 2rem;
   --type-mobile-h1-weight: 700;
@@ -174,4 +174,10 @@
   --type-mobile-button-sm-weight: 700;
   --type-mobile-button-sm-lh: 1rem;
   --type-mobile-button-sm-ls: 0px;
+
+  /* Deprecated aliases — backward compatibility */
+  --type-button-label-small-size: var(--type-button-label-sm-size); /* @deprecated use --type-button-label-sm-size */
+  --type-button-label-small-weight: var(--type-button-label-sm-weight); /* @deprecated use --type-button-label-sm-weight */
+  --type-button-label-small-lh: var(--type-button-label-sm-lh); /* @deprecated use --type-button-label-sm-lh */
+  --type-button-label-small-ls: var(--type-button-label-sm-ls); /* @deprecated use --type-button-label-sm-ls */
 }

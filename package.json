@@ -1,6 +1,6 @@
 {
   "name": "@ntgovernment/web-design-tokens",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Design tokens for the NT Government web design system — CSS custom properties and JS/TS token objects.",
   "license": "MIT",
   "type": "module",
@@ -21,6 +21,8 @@
     "./css/base-variables": "./dist/css/base-variables.css",
     "./css/theme-ntg": "./dist/css/themes/theme-ntg.css",
     "./css/theme-central": "./dist/css/themes/theme-central.css",
+    "./css/theme-ntg-bundled": "./dist/css/themes/theme-ntg.bundled.css",
+    "./css/theme-central-bundled": "./dist/css/themes/theme-central.bundled.css",
     "./css/typography-ntg": "./dist/css/themes/typography-ntg.css",
     "./css/typography-central": "./dist/css/themes/typography-central.css",
     "./tokens.json": "./tokens.json"
@@ -34,7 +36,8 @@
     "tokens:validate": "node scripts/validate-tokens.js",
     "tokens:build": "node scripts/build-tokens.js",
     "build:js": "node scripts/generate-js-tokens.js",
-    "build": "npm run tokens:validate && npm run tokens:build && npm run build:js",
+    "validate:css": "node scripts/validate-css.js",
+    "build": "npm run tokens:validate && npm run tokens:build && npm run build:js && npm run validate:css",
     "prepublishOnly": "npm run build"
   },
   "publishConfig": {

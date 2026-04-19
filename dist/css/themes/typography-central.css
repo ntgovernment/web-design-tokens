@@ -13,7 +13,7 @@
  * 1. Update tokens.json
  * 2. Run: npm run tokens:build
  * 
- * Generated: 2026-04-19T02:13:04.996Z
+ * Generated: 2026-04-19T07:46:10.203Z
  * Source: Figma Design Tokens
  */
 
@@ -21,8 +21,8 @@
   /* ===== TYPOGRAPHY ===== */
   
   /* Font Families */
-  --bs-font-sans-serif: var(--central-type-font-default), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --bs-body-font-family: var(--central-type-font-default), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --bs-font-sans-serif: var(--central-type-font-family-default), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --bs-body-font-family: var(--central-type-font-family-default), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   
   /* Body Typography */
   --bs-body-font-size: var(--central-type-desktop-body-default-size);
@@ -48,13 +48,13 @@
   
   /* Primary Brand Colors mapped to NTG Central palette */
   --bs-primary: var(--central-clr-action-pirmary);
-  --bs-secondary: var(--central-neutral-06);
-  --bs-success: var(--central-success-03-d);
-  --bs-info: var(--central-info-03-d);
-  --bs-warning: var(--central-warning-03-d);
-  --bs-danger: var(--central-danger-03-d);
-  --bs-light: var(--central-neutral-01);
-  --bs-dark: var(--central-blue-03-d);
+  --bs-secondary: var(--central-neutrals-06);
+  --bs-success: var(--central-success-03);
+  --bs-info: var(--central-info-03);
+  --bs-warning: var(--central-warning-03);
+  --bs-danger: var(--central-danger-03);
+  --bs-light: var(--central-neutrals-01);
+  --bs-dark: var(--central-blue-03);
   
   /* Emphasis Colors */
   --bs-emphasis-color: var(--central-clr-text-emphasis);
@@ -73,7 +73,7 @@
   /* ===== COMPONENT-SPECIFIC ===== */
   
   /* Code */
-  --bs-code-color: var(--central-coral-03-d);
+  --bs-code-color: var(--central-blue-03);
   
   /* Highlight/Mark */
   --bs-highlight-color: var(--central-clr-text-default);

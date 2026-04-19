@@ -13,7 +13,7 @@
  * 1. Update tokens.json
  * 2. Run: npm run tokens:build
  * 
- * Generated: 2026-04-19T02:13:04.993Z
+ * Generated: 2026-04-19T07:46:10.198Z
  * Source: Figma Design Tokens
  */
 
@@ -21,8 +21,8 @@
   /* ===== TYPOGRAPHY ===== */
   
   /* Font Families */
-  --bs-font-sans-serif: var(--ntg-type-font-default), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --bs-body-font-family: var(--ntg-type-font-default), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --bs-font-sans-serif: var(--ntg-type-font-family-default), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --bs-body-font-family: var(--ntg-type-font-family-default), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   
   /* Body Typography */
   --bs-body-font-size: var(--ntg-type-desktop-body-default-size);
