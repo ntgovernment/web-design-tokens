@@ -4,12 +4,12 @@
  * Imports all token layers in cascade order, giving you the full NT.GOV.AU
  * theme with all semantic defaults:
  *
- *   common.css             — shadows, spacing, border widths, radii (25 vars)
+ *   common.css             — shadows, spacing, border widths, radii (27 vars)
  *   grid.css               — Bootstrap-compatible grid breakpoints (15 vars)
- *   typography.css         — theme-agnostic typography scale (144 vars)
- *   typography-literals.css — literal text-transform values (3 vars)
- *   base-variables.css     — unprefixed semantic defaults, NTG (82 vars)
- *   theme-ntg.css          — NT.GOV.AU colour/type theme (796 vars);
+ *   typography.css         — theme-agnostic typography scale (149 vars)
+ *   typography-literals.css — literal text-transform values (4 vars)
+ *   base-variables.css     — unprefixed semantic defaults, NTG (84 vars)
+ *   theme-ntg.css          — NT.GOV.AU colour/type theme (810 vars);
  *                            also re-imports common/grid/typography/typography-literals
  *
  * Note: theme-ntg.css re-imports the first four layers internally. The
@@ -23,9 +23,9 @@
  *   @import '@ntgovernment/web-design-tokens/css';
  */
 
-@import './common.css';
-@import './grid.css';
-@import './typography.css';
-@import './typography-literals.css';
-@import './base-variables.css';
-@import './theme-ntg.css';
+@import "./common.css";
+@import "./grid.css";
+@import "./typography.css";
+@import "./typography-literals.css";
+@import "./base-variables.css";
+@import "./theme-ntg.css";

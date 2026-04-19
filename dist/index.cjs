@@ -110,16 +110,16 @@ const colors = {
       "04": "#c43004"
     },
     "neutrals": {
-      "10": "#393b3c",
-      "02": "#f5f5f5",
-      "03": "#ecf0f0",
-      "04": "#dce0e4",
-      "05": "#c8cacd",
-      "06": "#acb0b4",
-      "07": "#8f9396",
-      "08": "#6c7074",
-      "09": "#56585a",
-      "01": "#ffffff",
+      "01": "#f5f5f7",
+      "02": "#ecf0f0",
+      "03": "#dce0e4",
+      "04": "#c8cacd",
+      "05": "#acb0b4",
+      "06": "#8f9396",
+      "07": "#6c7074",
+      "08": "#56585a",
+      "09": "#393b3c",
+      "white": "#ffffff",
       "black": "#000000"
     },
     "info": {
@@ -156,9 +156,11 @@ const spacing = {
   "sm": "12px",
   "md": "16px",
   "xl": "24px",
-  "xxl": "32px",
-  "xxxl": "48px",
-  "lg": "20px"
+  "2xl": "32px",
+  "3xl": "48px",
+  "lg": "20px",
+  "4xl": "64px",
+  "5xl": "80px"
 };
 
 const typography = {
@@ -258,11 +260,19 @@ const typography = {
     }
   },
   "uppercase": {
-    "small": {
+    "sm": {
       "size": 12,
       "weight": "700",
       "lineHeight": 16,
-      "letterSpacing": 2,
+      "letterSpacing": 1,
+      "fontFamily": "Lato",
+      "textTransform": "uppercase"
+    },
+    "md": {
+      "size": 14,
+      "weight": "700",
+      "lineHeight": 20,
+      "letterSpacing": 0.5,
       "fontFamily": "Lato",
       "textTransform": "uppercase"
     },
@@ -270,7 +280,6 @@ const typography = {
       "size": 16,
       "weight": "700",
       "lineHeight": 16,
-      "letterSpacing": 1,
       "fontFamily": "Lato",
       "textTransform": "uppercase"
     }
@@ -315,8 +324,10 @@ const borders = {
     "none": "0px",
     "button": "0px",
     "sm": "4px",
-    "md": "20px",
-    "lg": "100px"
+    "md": "8px",
+    "full": "100px",
+    "lg": "12px",
+    "xl": "16px"
   }
 };
 

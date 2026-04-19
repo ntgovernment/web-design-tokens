@@ -109,7 +109,7 @@ export declare const colors: {
         "04": string;
       };
       "neutrals": {
-        "10": string;
+        "01": string;
         "02": string;
         "03": string;
         "04": string;
@@ -118,7 +118,7 @@ export declare const colors: {
         "07": string;
         "08": string;
         "09": string;
-        "01": string;
+        "white": string;
         "black": string;
       };
       "info": {
@@ -248,7 +248,15 @@ export declare const typography: {
       };
     };
     "uppercase": {
-      "small": {
+      "sm": {
+        "size": string;
+        "weight": string;
+        "lineHeight": string;
+        "letterSpacing": string;
+        "fontFamily": string;
+        "textTransform": string;
+      };
+      "md": {
         "size": string;
         "weight": string;
         "lineHeight": string;
@@ -260,7 +268,6 @@ export declare const typography: {
         "size": string;
         "weight": string;
         "lineHeight": string;
-        "letterSpacing": string;
         "fontFamily": string;
         "textTransform": string;
       };
@@ -296,7 +303,9 @@ export declare const borders: {
       "button": string;
       "sm": string;
       "md": string;
+      "full": string;
       "lg": string;
+      "xl": string;
     };
   };
 
