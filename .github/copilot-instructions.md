@@ -99,11 +99,20 @@ Two slash-command prompts are available in `.github/prompts/`:
 | `/update-documentation` | `update-documentation.prompt.md` | Update README, inline comments, and JSDoc throughout the package            |
 | `/deploy-to-dev`        | `deploy-to-dev.prompt.md`        | Stage, version-bump, commit with conventional message, push to `origin/dev` |
 
+## CI/CD
+
+| Workflow | File | Trigger | Purpose |
+| -------- | ---- | ------- | ------- |
+| CI | `.github/workflows/ci.yml` | Push/PR to `dev` or `main` | Runs `npm run build` (validate → CSS → JS/TS → validate CSS) |
+| Publish | `.github/workflows/publish.yml` | Push to `main` or `v*` tag | Builds then publishes to GitHub Packages |
+
+Merging to `main` automatically publishes a new version to GitHub Packages. Ensure the version in `package.json` is bumped before merging.
+
 ## Scripts
 
-| Script                          | Purpose                                                                 |
-| ------------------------------- | ------------------------------------------2 CSS files (6 shared, 4 themes, 2 bundled)     |
-| `scripts/validate-tokens.js`    | Validates `tokens.json` structure and reports statistics (872 tokens, 78 references)      |
-| `scripts/validate-css.js`       | Post-build CSS validation: self-refs, undefined vars, broken imports, spurious RGB, duplicates |
+| Script | Purpose |
+| ------------------------------- | ------- |
+| `scripts/build-tokens.js` | Reads `tokens.json`, generates 12 CSS files (6 shared, 4 themes, 2 bundled) |
+| `scripts/validate-tokens.js` | Validates `tokens.json` structure and reports statistics (872 tokens, 78 references) |
+| `scripts/validate-css.js` | Post-build CSS validation: self-refs, undefined vars, broken imports, spurious RGB, duplicates |
 | `scripts/generate-js-tokens.js` | Reads `tokens.json`, writes `dist/index.{mjs,cjs,d.ts}` (ES module, CommonJS, TypeScript) |
-| `scripts/generate-js-tokens.js` | Reads `tokens.json`, writes `dist/index.{mjs,cjs,d.ts}`                 |

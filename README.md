@@ -93,19 +93,19 @@ import tokens from "@ntgovernment/web-design-tokens/tokens.json" with { type: "j
 
 ## Token layers
 
-| File                                     | Variables | Content                                  |
-| ---------------------------------------- | --------- | ---------------------------------------- |
-| `dist/css/common.css`                    | 27        | Shadows, spacing, border widths, radii   |
-| `dist/css/grid.css`                      | 15        | Bootstrap-compatible grid breakpoints    |
-| `dist/css/typography.css`                | 149       | Theme-agnostic typography scale          |
-| `dist/css/typography-literals.css`       | 4         | Literal `text-transform` values          |
-| `dist/css/base-variables.css`            | 84        | Unprefixed semantic defaults (NTG)       |
-| `dist/css/themes/theme-ntg.css`          | 638       | NT.GOV.AU theme — Lato, ochre accent     |
-| `dist/css/themes/theme-central.css`      | 538       | NTG Central theme — Roboto, green accent |
-| `dist/css/themes/theme-ntg.bundled.css`  | 813       | NT.GOV.AU bundled (all layers inlined)   |
-| `dist/css/themes/theme-central.bundled.css` | 713    | NTG Central bundled (all layers inlined) |
-| `dist/css/themes/typography-ntg.css`     | 38        | Bootstrap `--bs-*` overrides (NTG)       |
-| `dist/css/themes/typography-central.css` | 38        | Bootstrap `--bs-*` overrides (Central)   |
+| File                                        | Variables | Content                                  |
+| ------------------------------------------- | --------- | ---------------------------------------- |
+| `dist/css/common.css`                       | 27        | Shadows, spacing, border widths, radii   |
+| `dist/css/grid.css`                         | 15        | Bootstrap-compatible grid breakpoints    |
+| `dist/css/typography.css`                   | 149       | Theme-agnostic typography scale          |
+| `dist/css/typography-literals.css`          | 4         | Literal `text-transform` values          |
+| `dist/css/base-variables.css`               | 84        | Unprefixed semantic defaults (NTG)       |
+| `dist/css/themes/theme-ntg.css`             | 638       | NT.GOV.AU theme — Lato, ochre accent     |
+| `dist/css/themes/theme-central.css`         | 538       | NTG Central theme — Roboto, green accent |
+| `dist/css/themes/theme-ntg.bundled.css`     | 813       | NT.GOV.AU bundled (all layers inlined)   |
+| `dist/css/themes/theme-central.bundled.css` | 713       | NTG Central bundled (all layers inlined) |
+| `dist/css/themes/typography-ntg.css`        | 38        | Bootstrap `--bs-*` overrides (NTG)       |
+| `dist/css/themes/typography-central.css`    | 38        | Bootstrap `--bs-*` overrides (Central)   |
 
 Theme files (`theme-ntg.css`, `theme-central.css`) automatically import `common.css`, `grid.css`, `typography.css`, and `typography-literals.css` via relative `../` paths — so importing one theme file is all you need.
 
@@ -146,7 +146,10 @@ To update tokens:
 
 1. Export updated tokens from Figma and replace `tokens.json` at the package root.
 2. Validate, build, and verify:
-Full build chain: validate tokens → generate CSS → generate JS/TS → validate CSS
+   Full build chain: validate tokens → generate CSS → generate JS/TS → validate CSS
+
+```bash
+npm run build
 ```
 
 Individual steps:
@@ -155,14 +158,18 @@ Individual steps:
 npm run tokens:validate  # Validate tokens.json structure and report statistics
 npm run tokens:build     # Generate CSS files into dist/css/ (12 files)
 npm run build:js         # Generate JS/TS files into dist/ (3 files)
-npm run validate:css     # Validate generated CSS (self-refs, undefined vars, broken imports, RGB, duplicates)and report statistics
-npm run tokens:build     # Generate CSS files into dist/css/
-npm run build:js         # Generate JS/TS files into dist/
+npm run validate:css     # Validate generated CSS (self-refs, undefined vars, broken imports, RGB, duplicates)
 ```
 
 ## Publishing
 
 This package is published to GitHub Packages under the `@ntgovernment` scope.
+
+### Automatic (recommended)
+
+Merging to `main` automatically builds and publishes via the [publish workflow](.github/workflows/publish.yml). Ensure the version in `package.json` is bumped before merging.
+
+### Manual
 
 **Prerequisites:**
 
